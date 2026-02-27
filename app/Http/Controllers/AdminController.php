@@ -8,6 +8,6 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard'); // kreiraćemo ovaj Blade view
+        return view('admin.dashboard'); 
     }
 }
