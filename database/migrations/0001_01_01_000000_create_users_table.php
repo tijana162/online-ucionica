@@ -24,7 +24,7 @@ return new class extends Migration
 
     // Zajedničko
     $table->string('email')->unique();
-    $table->string('role'); // admin ili student
+    $table->string('role');
     $table->string('password');
     $table->rememberToken();
     $table->timestamps();
