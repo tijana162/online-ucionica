@@ -3,9 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class StudentMiddleware
 {
@@ -14,12 +12,12 @@ class StudentMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-   public function handle($request, Closure $next)
-{
-    if (auth()->user()->role !== 'student') {
-        abort(403);
-    }
+    public function handle($request, Closure $next)
+    {
+        if (auth()->user()->role !== 'student') {
+            abort(403);
+        }
 
-    return $next($request);
-}
+        return $next($request);
+    }
 }

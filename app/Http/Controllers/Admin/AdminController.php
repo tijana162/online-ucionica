@@ -3,45 +3,38 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreAdminRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-  public function index()
-{
-    $admins = \App\Models\User::where('role', 'admin')->get();
-    return view('admin.admins.index', compact('admins'));
-}
+    public function index()
+    {
+        $admins = User::where('role', 'admin')->get();
 
-public function create()
-{
-    return view('admin.admins.create');
-}
+        return view('admin.admins.index', compact('admins'));
+    }
 
-public function store(Request $request)
-{
-    $request->validate([
-        'ime' => 'required',
-        'prezime' => 'required',
-        'korisnicko_ime' => 'required|unique:users',
-        'email' => 'required|email|unique:users',
-        'password' => 'required|min:6'
-    ]);
+    public function create()
+    {
+        return view('admin.admins.create');
+    }
 
-    \App\Models\User::create([
-        'ime' => $request->ime,
-        'prezime' => $request->prezime,
-        'korisnicko_ime' => $request->korisnicko_ime,
-        'email' => $request->email,
-        'password' => bcrypt($request->password),
-        'role' => 'admin',
-    ]);
+    public function store(StoreAdminRequest $request)
+    {
+        User::create([
+            'ime' => $request->ime,
+            'prezime' => $request->prezime,
+            'korisnicko_ime' => $request->korisnicko_ime,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => 'admin',
+        ]);
 
-    return redirect()->route('admin.admins.index');
-}
+        return redirect()->route('admin.admins.index');
+    }
+
     /**
      * Display the specified resource.
      */

@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\StudentController;
-use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Student\StudentCourseController;
 use Illuminate\Support\Facades\Route;
-    use App\Http\Controllers\Student\StudentCourseController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,7 +31,6 @@ Route::middleware(['auth', 'admin'])
 
         Route::resource('courses', CourseController::class);
 
-    
         Route::post('courses/{course}/attach', [CourseController::class, 'attachStudent'])
             ->name('courses.attachStudent');
 
@@ -39,7 +38,7 @@ Route::middleware(['auth', 'admin'])
             ->name('courses.detachStudent');
     });
 
-Route::middleware(['auth'])->prefix('student')->name('student.')->group(function() {
+Route::middleware(['auth'])->prefix('student')->name('student.')->group(function () {
     Route::get('courses', [StudentCourseController::class, 'index'])->name('courses.index');
     Route::post('courses/{course}/enroll', [StudentCourseController::class, 'enroll'])->name('courses.enroll');
     Route::delete('courses/{course}/unenroll', [StudentCourseController::class, 'unenroll'])->name('courses.unenroll');

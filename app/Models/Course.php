@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 
 class Course extends Model
 {
@@ -17,9 +16,9 @@ class Course extends Model
         'opis',
     ];
 
-  public function students()
-{
-    return $this->belongsToMany(User::class, 'course_user')
-                ->where('role', 'student');
-}
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'course_user')
+            ->where('role', 'student');
+    }
 }

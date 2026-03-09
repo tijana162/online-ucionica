@@ -3,16 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Course;
+
 class StudentController extends Controller
 {
- 
     public function index()
     {
         $students = User::where('role', 'student')->get();
+
         return view('admin.students.index', compact('students'));
     }
 
@@ -37,7 +38,7 @@ class StudentController extends Controller
             'prezime' => $request->prezime,
             'korisnicko_ime' => $request->korisnicko_ime,
             'email' => $request->email,
-            'broj_indeksa' => $request->broj_indeksa, 
+            'broj_indeksa' => $request->broj_indeksa,
             'role' => 'student',
             'password' => Hash::make($request->password),
         ]);
@@ -51,7 +52,6 @@ class StudentController extends Controller
         return view('admin.students.show', compact('student'));
     }
 
-
     public function edit(User $student)
     {
         return view('admin.students.edit', compact('student'));
@@ -62,9 +62,9 @@ class StudentController extends Controller
         $request->validate([
             'ime' => 'required|string|max:255',
             'prezime' => 'required|string|max:255',
-            'korisnicko_ime' => 'required|string|max:255|unique:users,korisnicko_ime,' . $student->id,
-            'email' => 'required|email|unique:users,email,' . $student->id,
-             'broj_indeksa' => 'required|string|unique:users,broj_indeksa,' . $student->id,
+            'korisnicko_ime' => 'required|string|max:255|unique:users,korisnicko_ime,'.$student->id,
+            'email' => 'required|email|unique:users,email,'.$student->id,
+            'broj_indeksa' => 'required|string|unique:users,broj_indeksa,'.$student->id,
         ]);
 
         $student->update([
@@ -95,9 +95,11 @@ class StudentController extends Controller
 
         return back()->with('success', 'Uspešno prijavljen na kurs.');
     }
+
     public function unenroll(Course $course)
     {
         auth()->user()->courses()->detach($course->id);
+
         return back()->with('success', 'Uspešno odjavljen sa kursa.');
     }
-    }
+}

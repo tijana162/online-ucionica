@@ -28,17 +28,17 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-       $user = $request->user();
+        $user = $request->user();
 
         if ($user->role === 'admin') {
-            return redirect()->route('admin.students.index'); 
+            return redirect()->route('admin.students.index');
         }
 
         if ($user->role === 'student') {
             return redirect()->route('student.courses.index');
         }
 
-return redirect()->route('dashboard');
+        return redirect()->route('dashboard');
     }
 
     /**
