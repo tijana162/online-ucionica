@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            @if(session('success'))
+            @if (session('success'))
                 <div class="mb-4 p-3 bg-green-100 text-green-700 rounded">
                     {{ session('success') }}
                 </div>
@@ -16,7 +16,7 @@
 
             <div class="mb-4">
                 <a href="{{ route('admin.courses.create') }}"
-                   class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
                     Dodaj kurs
                 </a>
             </div>
@@ -31,27 +31,25 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
-                        @foreach($courses as $course)
+                        @foreach ($courses as $course)
                             <tr>
                                 <td class="px-6 py-4">{{ $course->opis }}</td>
                                 <td class="px-6 py-4">{{ $course->profesor }}</td>
                                 <td class="px-6 py-4 space-x-2">
-                                      <a href="{{ route('admin.courses.show', $course->id) }}"
+                                    <a href="{{ route('admin.courses.show', $course->id) }}"
                                         class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
-                                            Dodela kursa
-                                        </a>
+                                        Dodela kursa
+                                    </a>
                                     <a href="{{ route('admin.courses.edit', $course->id) }}"
-                                       class="text-blue-600 hover:underline">
+                                        class="text-blue-600 hover:underline">
                                         Izmeni
                                     </a>
 
-                                    <form action="{{ route('admin.courses.destroy', $course->id) }}"
-                                          method="POST"
-                                          class="inline-block">
+                                    <form action="{{ route('admin.courses.destroy', $course->id) }}" method="POST"
+                                        class="inline-block">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit"
-                                                class="text-red-600 hover:underline">
+                                        <button type="submit" class="text-red-600 hover:underline">
                                             Obriši
                                         </button>
                                     </form>
@@ -60,6 +58,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div class="mt-4">
+                    {{ $courses->links() }}
+                </div>
             </div>
 
         </div>
